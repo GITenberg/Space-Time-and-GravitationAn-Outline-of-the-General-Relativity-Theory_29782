@@ -1,0 +1,70 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+const double tau(0.4);
+const double MAX(5.5);
+const double M(3);
+double m11(0.2), m12((M-2*m11)/3); // original momenta
+double m21(0.85), m22((M-2*m21)/3); // new momenta
+
+P boost(const P& arg, double t)
+{
+  double CSH(cosh(t)), SNH(sinh(t));
+  double x(arg.x1()), y(arg.x2());
+
+  return P(CSH*x + SNH*y, CSH*y + SNH*x);
+}
+
+void time_grid(double t)
+{
+  P sw(boost(P(0,0), t)), se(boost(P(5,0), t));
+  P nw(boost(P(0,5), t)), ne(boost(P(5,5), t));
+  P dy(0.2*(nw-sw));
+
+  for (int i=0; i<= 5; ++i)
+    line(sw + i*dy, se + i*dy);
+}
+
+int main()
+{
+  picture(P(0,0), P(5,MAX), "2.5 x 3in");
+
+  begin();
+
+  P A1(m11, 1), M11(2*A1), M12(3*m12, 3), C1(M11 + M12), O(0,0);
+  P A2(m21, 1), M21(2*A2), M22(3*m22, 3), C2(M21 + M22);
+
+  label(P(0.5*xmax(), ymin()), P(0,-8), "\\textsc{Fig.~19.}", b);
+
+  bold();
+  line(O, P(xmax(),0));
+  line(O, P(0,ymax()));
+
+  line(O, M11);
+  line(O, M21);
+  line(M11, C1);
+  line(M21, C2);
+
+  dashed();
+  time_grid(0);
+
+  font_size("footnotesize");
+  label(O, P(-2,-2), "$O$", bl);
+
+  label(P(0,1), P(-2,0), "$M$", l);
+  label(P(0,2), P(-2,0), "$N$", l);
+  label(P(0,5), P(-2,0), "$P$", l);
+  label(P(0,ymax()), P(-2,0), "$T$", l);
+
+  label(A1, P(2,2), "$A$", tr);
+  label(M11, P(0,2), "$B$", tl);
+  label(M21, P(4,2), "$B'$", tr);
+
+  label(C1, P(0,2), "$C$", t);
+
+  label(P(xmax()), P(0,-4), "$X$", b);
+
+  tikz_format();
+  end();
+}

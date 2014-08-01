@@ -1,0 +1,46 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+P arg1(0.4,0), arg2(polar(0.4, M_PI/3)), sw(-2.5*(arg1+arg2));
+
+void my_grid()
+{
+  for (int i=0; i <= 5; ++i)
+    {
+      line(sw + i*arg1, sw + i*arg1 + 5*arg2);
+      line(sw + i*arg2, sw + i*arg2 + 5*arg1);
+    }
+}
+
+int main()
+{
+  picture(P(0,0), P(3.5,1), "4.5 x 1.286in");
+
+  begin();
+
+  screen scr1(P(-1,-1), P(1,1)), scr2(scr1), scr3(scr1);
+
+  bold();
+  activate(scr1);
+  grid(5,5);
+  inset(P(0,0), P(1,1));
+  deactivate(scr1);
+
+  activate(scr2);
+  polar_grid(1, 4,18);
+  inset(P(1.25,0), P(2.25,1));
+  deactivate(scr2);
+
+  activate(scr3);
+  my_grid();
+  inset(P(2.5,0), P(3.5,1));
+  deactivate(scr3);
+
+  label(P(0.5,0), P(0,-8), "\\textsc{Fig.~10}", b);
+  label(P(1.75,0), P(0,-8), "\\textsc{Fig.~11}", b);
+  label(P(2.875,0), P(0,-8), "\\textsc{Fig.~12}", b);
+
+  tikz_format();
+  end();
+}

@@ -1,0 +1,56 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+const double ht(0.6);
+const double k(5); // tightness of bending
+
+P E(0, ht), ptP2(4.5, ht), Sun(1.5, 0.3);
+
+double f(double t)
+{
+  t -= Sun.x1();
+  return log(1 + exp(k*t))/k;
+}
+
+P straight(double t)
+{
+  return E + t*(ptP2 - E);
+}
+
+P bent(double t)
+{
+  P tmp(straight(t));
+  double tau(tmp.x1());
+  return tmp - P(0, 0.15*f(tau));
+}
+
+int main()
+{
+  picture(P(0,0), P(4.5,1), "4.5 x 1in");
+
+  begin();
+
+  label(P(0.5*(xmin()+xmax()), ymin()), P(0,-8), "\\textsc{Fig.~16.}", b);
+
+  bold();
+  circle(Sun, 0.125);
+  plot(bent, 0, 1, 60);
+
+  dashed();
+  line(E, ptP2);
+
+  font_size("footnotesize");
+  label(Sun, "$S$");
+
+  dot(E, P(2,2), "$E$", tr);
+  label(straight(0.25), P(0,2), "$F$", t);
+
+  label(straight(1), P(0,2), "$P'$", t);
+
+  label(bent(0.5), P(0,-2), "$Q$", b);
+  label(bent(1), P(0,2), "$P$", t);
+
+  tikz_format();
+  end();
+}

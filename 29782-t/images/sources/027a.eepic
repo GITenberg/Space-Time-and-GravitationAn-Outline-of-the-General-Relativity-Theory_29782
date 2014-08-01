@@ -1,0 +1,27 @@
+%% Generated from 027a.xp on Wed Mar  4 09:33:03 EST 2009 by
+%% ePiX-1.2.6
+%% 
+%%   Cartesian bounding box: [0,1] x [-0.125,1.125]
+%%   Actual size: 1.6 x 2in
+%%   Figure offset: left by 0in, down by 0in
+%% 
+%% usepackages tikz
+%% 
+\xdefinecolor{rgb_000000}{rgb}{0,0,0}%
+\begin{tikzpicture}[cap=round]
+\pgfsetlinewidth{0.4pt}
+\useasboundingbox (0in,0in) rectangle (1.6in,2in);
+\pgftext[at={\pgfpoint{0.8in}{-0.110696in}}] {\makebox(0,0)[t]{\hbox{\color{rgb_000000}\textsc{Fig.~1.}}}}
+\pgfsetlinewidth{0.8pt}
+\draw (0in,0.2in)--(1.6in,0.2in)--(1.6in,1.4in)--(0in,0.2in)--cycle;
+\pgftext[at={\pgfpoint{0in}{0.144652in}}] {\makebox(0,0)[t]{\hbox{\color{rgb_000000}\footnotesize $O$}}}
+\pgftext[at={\pgfpoint{1.6in}{0.144652in}}] {\makebox(0,0)[t]{\hbox{\color{rgb_000000}\footnotesize $B$}}}
+\pgftext[at={\pgfpoint{1.6in}{1.45535in}}] {\makebox(0,0)[b]{\hbox{\color{rgb_000000}\footnotesize $E$}}}
+\draw (0.32in,2in)--(0.32in,1.48in);
+\pgfsetfillcolor{rgb_000000}
+\draw [fill](0.32in,1.52324in)--(0.285407in,1.56648in)--
+  (0.32in,1.48in)--(0.354593in,1.56648in)--(0.32in,1.52324in)--cycle;
+\draw (0.96in,2in)--(0.96in,1.48in);
+\draw [fill](0.96in,1.52324in)--(0.925407in,1.56648in)--
+  (0.96in,1.48in)--(0.994593in,1.56648in)--(0.96in,1.52324in)--cycle;
+\end{tikzpicture}

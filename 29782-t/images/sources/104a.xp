@@ -1,0 +1,51 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+const double rad(0.2); // inner circle
+
+P midpt(const P& tail, const P& head, double t)
+{
+  return tail + t*(head - tail);
+}
+
+int main()
+{
+  picture(P(-1,-1), P(1,1), "3.5 x 3.5in");
+
+  begin();
+  degrees();
+
+  label(P(0, ymin()), P(0,-8), "\\textsc{Fig.~13.}", b);
+
+  arrow_inset(0.5);
+  arrow_width(5);
+  arrow_ratio(2.5);
+
+  P Sun(polar(rad, 205)), Sun2(polar(rad, 190));
+  P Jp(cis(20)), Jp2(cis(5));
+
+  font_size("footnotesize");
+
+  bold();
+
+  circle();
+  circle(P(0,0), rad);
+
+  arc_arrow(P(0,0), 0.9, 70, 110);
+  arrow(midpt(Jp, Sun2, 0.3), midpt(Jp, Sun2, 0.31));
+  arrow(midpt(Sun, Jp2, 0.72), midpt(Sun, Jp2, 0.73));
+
+  dot(Sun,  P(-2,-2), "$S$", bl);
+  dot(Sun2, P(-2, 0), "$S'$", l);
+
+  dot(Jp,  P(2,2), "$J$", tr);
+  dot(Jp2, P(2,0), "$J'$", r);
+
+  dashed();
+  line(Sun, Jp2);
+  line(Sun2, Jp);
+
+  tikz_format();
+  end();
+}

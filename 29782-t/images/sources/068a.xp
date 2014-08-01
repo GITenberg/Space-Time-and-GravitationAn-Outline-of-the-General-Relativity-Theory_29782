@@ -1,0 +1,74 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+const double rad(0.8);
+const double th(M_PI/6);
+
+const double ydim(0.5);
+const double zmax(5);
+const double dx(0.6);
+const double dz(1.66);
+
+void clock(const P& ctr, double t)
+{
+  fill(White());
+  circle(ctr, 1);
+  for (int i=0; i<12; ++i)
+    line(ctr+polar(rad, i*th), ctr+cis(i*th));
+
+  fill(Black());
+  circle(ctr, 0.05);
+  fill(Neutral());
+
+  arrow(ctr, ctr + polar(0.9, t*th));
+}
+
+std::string to_str(int i)
+{
+  std::stringstream buf;
+  buf << i;
+  return buf.str();
+}
+
+int main()
+{
+  //  picture(P(-5.5,-3.5), P(4.5,-0.5), "5 x 1.5in");
+  picture(P(-5.5,-3), P(4.5,-0.5), "5 x 1in");
+
+  begin();
+  camera.at(P(2, -4, 1.75)).look_at(P(1.75,0,0)).range(100).roll(-M_PI_2);
+  arrow_inset(-0.5);
+
+  label(P(-1-dx, 0), P(0,-16), "\\textsc{Fig.~9.}", b);
+
+  font_size("footnotesize");
+
+  //  fill(Black());
+  //  rect(P(-1, 0, zmax - 6*dz), P(-1, ydim, zmax));
+  //  fill(Neutral());
+  // mild hackery to avoid tikz's mitre joints on sharp angles
+  pen(2);
+  line(P(-1, 0, zmax - 6*dz), P(-1, ydim, zmax - 6*dz));
+  line(P(-1, ydim, zmax - 6*dz), P(-1, ydim, zmax));
+  line(P(-1, 0, zmax - 6*dz), P(-1, 0, zmax));
+  bold();
+
+  rect(P(-1,     0, zmax - 6*dz), P(-1-dx, 0, zmax));
+  rect(P(-1,  ydim, zmax),        P(-1-dx, 0, zmax));
+
+  for (int i=0; i<6; ++i)
+    {
+      double ht(zmax - i*dz);
+      clock(P(0,0, ht), i);
+      line(P(-1, 0, ht), P(-1 - 0.5*dx, 0, ht));
+      if (i != 0)
+	label(P(-1 - 0.5*dx, 0, ht), P(-2,0), to_str(i), l);
+    }
+
+  label(P(-1-0.5*dx,ydim,zmax), P(-4,0), "$A$", l);
+  label(P(-1-0.5*dx,0,zmax-6*dz), P(4,0), "$B$", r);
+
+  tikz_format();
+  end();
+}

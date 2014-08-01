@@ -1,0 +1,90 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+P to_pic(double x, double y)
+{
+  return P((x-30)/379, (403 - y)/380);
+}
+
+void star1(double x, double y,
+	   const P& offset, const std::string& lbl, epix_label_posn A)
+{
+  dot_size(5);
+  spot(to_pic(x, y), offset, lbl, A);
+}
+
+void star2(double x, double y,
+	   const P& offset, const std::string& lbl, epix_label_posn A)
+{
+  dot_size(5);
+  dot(to_pic(x, y), offset, lbl, A);
+}
+
+void star3(double x, double y,
+	   const P& offset, const std::string& lbl, epix_label_posn A)
+{
+  dot_size(4);
+  ddot(to_pic(x, y), offset, lbl, A);
+}
+
+int main()
+{
+  picture(P(0,0), P(1,1), "5.5 x 5.5in");
+
+  begin();
+
+  bold();
+  tick_size(5);
+
+  label(P(0.5*(xmin() + xmax()), 0), P(0,-24), "\\textsc{Fig.~18.}", b);
+
+  // sun locations
+  P pp(to_pic(187, 242)), ps(to_pic(198, 247));
+
+  // cardinal points
+  P ptE(to_pic( 44,220)), ptS(to_pic(246,413));
+  P ptW(to_pic(414,214)), ptN(to_pic(226, 26));
+
+  quad(to_pic(238, 402), to_pic(407, 237), to_pic(201,24), to_pic(30,188));
+  quad(to_pic(400, 376), to_pic(398,63), to_pic(88,63), to_pic(88,376));
+
+  //  circle(to_pic(192, 246), 0.075);
+  P ctr(to_pic(192, 246));
+  circle(ctr, norm(ctr-to_pic(223, 245)));
+  line(pp, ps);
+
+  font_size("footnotesize");
+  label(pp, P(-2,0), "P", l);
+  label(ps, P( 2,0), "S", r);
+
+  star3(238, 241, P(3,0), "$1$", r);
+  star3(135, 254, P(3,0), "$2$", r);
+  star2(206, 186, P(4,0), "$3$", r);
+  star1(207, 175, P(6,0), "$4$", r);
+  star2(256, 329, P(4,0), "$5$", r);
+  star1(182, 114, P(6,0), "$6$", r);
+
+  star3(310, 305, P(3,0), "$7$", r);
+  star3(312, 323, P(-3,0), "$8$", l);
+  star3(288, 348, P(3,-3), "$9$", br);
+  star2(154,  92, P(4,0), "$10$", r);
+  star2(364, 236, P(4,0), "$11$", r);
+  star2(369, 310, P(4,0), "$12$", r);
+  star3(213, 122, P(3,0), "$13$", r);
+
+  h_axis_tick(ptN, b);
+  label(ptN, P(0,2), "N", t);
+
+  h_axis_tick(ptS, t);
+  label(ptS, P(0,-2), "S", b);
+
+  v_axis_tick(ptE, r);
+  label(ptE, P(-2,0), "E", l);
+
+  v_axis_tick(ptW, l);
+  label(ptW, P(2,0), "W", r);
+
+  tikz_format();
+  end();
+}

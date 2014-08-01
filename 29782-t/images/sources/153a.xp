@@ -1,0 +1,82 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+const double tau(0.4);
+const double MAX(5.5);
+const double M(3);
+double m11(0.2), m12((M-2*m11)/3); // original momenta
+double m21(0.85), m22((M-2*m21)/3); // new momenta
+
+P boost(const P& arg, double t)
+{
+  double CSH(cosh(t)), SNH(sinh(t));
+  double x(arg.x1()), y(arg.x2());
+
+  return P(CSH*x + SNH*y, CSH*y + SNH*x);
+}
+
+void time_grid(double t)
+{
+  P sw(boost(P(0,0), t)), se(boost(P(5,0), t));
+  P nw(boost(P(0,5), t)), ne(boost(P(5,5), t));
+  P dy(0.2*(nw-sw) - 0.075*(se - sw));
+
+  for (int i=0; i<= 5; ++i)
+    line(sw + i*dy, se + i*dy);
+}
+
+int main()
+{
+  picture(P(0,0), P(5,MAX), "2.5 x 3in");
+
+  begin();
+
+  Segment time2(boost(P(0,2), tau), boost(P(5,2), tau));
+  Segment time3(boost(P(0,3), tau), boost(P(5,3), tau));
+  Segment time5(boost(P(0,5), tau), boost(P(5,5), tau));
+
+  // particle directions
+  P A1(m11, 1), B1(m12, 1), A2(m21, 1), B2(m22, 1), O(0,0);
+
+  P M11(Segment(O, A1)*time2), M12(Segment(O, B1)*time3);
+
+  // P M21(Segment(O, A2)*time2), M22(Segment(O, B2)*time3);
+  P M21(Segment(O, A2)*time2), M22(Segment(O, B2)*time3);
+
+  P C1(M11 + M12), C2(Segment(M21, M21+B2)*time5);
+
+  label(P(0.5*xmax(), ymin()), P(0,-8), "\\textsc{Fig.~20.}", b);
+
+  bold();
+  line(O, boost(P(xmax(),0), tau));
+  line(O, boost(P(0,ymax()), tau));
+
+  line(O, M11);
+  line(O, M21);
+  line(M11, C1);
+  line(M21, C2);
+
+  dashed();
+  time_grid(tau);
+
+  font_size("footnotesize");
+  label(O, P(-2,-2), "$O$", bl);
+
+  label(boost(P(0,1), tau), P(0,-2), "$M$", br);
+  label(boost(P(0,2), tau), P(0,-2), "$N$", br);
+  label(boost(P(0,5), tau), P(-2,0), "$P$", tl);
+  label(boost(P(0,ymax()), tau), P(-2,0), "$T_1$", tl);
+
+  label( A1, P(-2,2), "$A$", tl);
+  label(M11, P(0, 2), "$B$", tl);
+  label(M21, P(0,-2), "$B'$", br);
+
+  label(C1, P( 2,2), "$C$", t);
+  label(C2, P(-4,0), "$C'$", t);
+
+  label(boost(P(xmax()), tau), P(0,-4), "$X_1$", b);
+
+  tikz_format();
+  end();
+}

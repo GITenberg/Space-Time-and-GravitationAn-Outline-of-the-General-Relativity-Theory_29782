@@ -1,0 +1,88 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+const double tau(0.4);
+double MAX(3.5);
+
+P boost(const P& arg, double t)
+{
+  double CSH(cosh(t)), SNH(sinh(t));
+  double x(arg.x1()), y(arg.x2());
+
+  return P(CSH*x + SNH*y, CSH*y + SNH*x);
+}
+
+std::string math(const std::string& arg)
+{
+  return "$" + arg + "$";
+}
+
+const double mx(0.75);
+void time_grid(double t,
+	       const std::string& lbl1,
+	       const std::string& lbl2)
+{
+  P sw(boost(P(-mx,0), t)), se(boost(P(mx,0), t));
+  P we(boost(P(-mx,1), t)), ea(boost(P(mx,1), t));
+  P nw(boost(P(-mx,2), t)), ne(boost(P(mx,2), t));
+
+  line(sw, se);
+  line(we, ea);
+  line(ne, nw);
+
+  line(P(0,0), boost(P(0,2.75), t));
+
+  label(P(0,0), P(0,-2), math(lbl1), b);
+  // label(nw, P(-4,2), math(lbl2), l);
+  label(boost(P(0,2), t), P(2,-2), math(lbl2), br);
+}
+
+
+void cigar(double T, const std::string& lbl)
+{
+  P end(boost(P(0, 2), T));
+  line(P(0,0), end);
+  label(end, P(0,4), math(lbl), t);
+}
+
+
+int main()
+{
+  picture(P(0,0), P(1.5, 1), "3 x 2in");
+
+  begin();
+
+  label(P(0.5*xmax(), ymin()), P(0,-16), "\\textsc{Fig.~8.}", b);
+
+  screen scr1(P(-1,0), P(2,3)), scr2(P(-0.75,0), P(0.75,3));
+
+  bold();
+  font_size("footnotesize");
+
+  activate(scr1);
+  pen(1.5);
+  cigar(0, "M");
+
+  bold();
+  dashed();
+  time_grid(tau, "L", "N");
+  solid();
+
+  inset(P(0,0), P(1,1));
+  deactivate(scr1);
+
+  activate(scr2);
+  pen(1.5);
+  cigar(tau, "N'");
+  bold();
+
+  dashed();
+  time_grid(0, "L'", "M'");
+
+  inset(P(1,0), P(1.5,1));
+  deactivate(scr2);
+
+  tikz_format();
+  end();
+}

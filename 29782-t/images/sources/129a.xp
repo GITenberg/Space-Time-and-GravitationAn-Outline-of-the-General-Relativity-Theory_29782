@@ -1,0 +1,107 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+P to_pic(double x, double y)
+{
+  return P((x-62)/287, (330-y)/261);
+}
+
+void star(double x, double y)
+{
+  dot(to_pic(x, y));
+}
+
+// ticks et al. at Cartesian location
+void htick(const P& loc)
+{
+  h_axis_tick(loc, b);
+}
+
+void vtick(const P& loc)
+{
+  v_axis_tick(loc, l);
+}
+
+void hlab(const P& loc, const std::string& lbl)
+{
+  label(loc, P(0,-12), "$"+lbl+"'$", b);
+}
+
+void vlab(const P& loc, const std::string& lbl)
+{
+  label(loc, P(-12,0), "$"+lbl+"$", l);
+}
+
+int main()
+{
+  picture(P(0,0), P(1, 1), "4 x 3.5in");
+
+  begin();
+  label(P(0.5*(xmin()+xmax()), 0), P(0,-32), "\\textsc{Fig.~17.}", b);
+
+  tick_size(5);
+
+  bold();
+  // h_axis ticks
+  P pt90(to_pic(143, 330));
+  P pt80(to_pic(153, 330));
+  P pt70(to_pic(166, 330));
+  P pt60(to_pic(182, 330));
+  P pt50(to_pic(205, 330));
+  P pt40(to_pic(242, 330));
+  P pt30(to_pic(302, 330));
+  P pt25(to_pic(349, 330));
+
+  line(P(0,0), P(1.025*xmax(),0), 10);
+  line(P(0,0), P(0,1.1*ymax()));
+
+  dashed();
+  line(to_pic(62, 330), to_pic(340, 53));
+
+  for (int i=0; i<=10; ++i)
+    vtick(P(0,0.1*i));
+
+  font_size("footnotesize");
+  vlab(P(0,0.1), ".01");
+  vlab(P(0,0.2), ".02");
+  vlab(P(0,0.3), ".03");
+  vlab(P(0,0.4), ".04");
+  vlab(P(0,0.5), ".05");
+  vlab(P(0,0.6), ".06");
+  vlab(P(0,0.7), ".07");
+  vlab(P(0,0.8), ".08");
+  vlab(P(0,0.9), ".09");
+  vlab(P(0,1), "1''.00");
+
+  htick(pt90);
+  htick(pt80);
+  htick(pt70);
+  htick(pt60);
+  htick(pt50);
+  htick(pt40);
+  htick(pt30);
+  htick(pt25);
+
+  hlab(pt90, "90");
+  hlab(pt60, "60");
+  hlab(pt50, "50");
+  hlab(pt40, "40");
+  hlab(pt30, "30");
+  hlab(pt25, "25");
+
+  // stars
+  star(146, 277);
+  star(150, 246);
+  star(167, 184);
+  star(201, 188);
+  star(259, 111);
+  star(285, 76);
+  star(294, 64);
+
+  label(P(0,0), P(0,-12), "Distance", b);
+  label(P(0,1.1*ymax()), P(0,4), "Displacement", t);
+
+  tikz_format();
+  end();
+}

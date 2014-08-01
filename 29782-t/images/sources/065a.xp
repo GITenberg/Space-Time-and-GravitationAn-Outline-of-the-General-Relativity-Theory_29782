@@ -1,0 +1,106 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+const double tau(0.4);
+
+P boost(const P& arg, double t)
+{
+  double CSH(cosh(t)), SNH(sinh(t));
+  double x(arg.x1()), y(arg.x2());
+
+  return P(CSH*x + SNH*y, CSH*y + SNH*x);
+}
+
+void time_grid(double t)
+{
+  P sw(boost(P(0,0), t)), se(boost(P( 1,0), t));
+  P nw(boost(P(0, 1), t)), ne(boost(P( 1, 1), t));
+
+  line(sw, se, 120);
+  line(sw, nw, 120);
+  line(ne, se, 120);
+  line(ne, nw, 120);
+}
+
+const double my_x1(0.15);
+const double my_x2(1+my_x1);
+
+std::string math(const std::string& arg)
+{
+  return "$" + arg + "$";
+}
+
+void rod(double t, const std::string& lbl1, const std::string& lbl2)
+{
+  P sw(boost(P(my_x1,-1.5), t)), se(boost(P(my_x2,-1.5), t));
+  P nw(boost(P(my_x1, 2.5), t)), ne(boost(P(my_x2, 2.5), t));
+
+  line(sw, se);
+  line(sw, nw);
+  line(ne, se);
+
+  label(sw, P(-4,0), math(lbl1), bl);
+  label(se, P( 2,0), math(lbl2), br);
+
+  label(nw, P(-2,0), math(lbl1 + "'"), tl);
+  label(ne, P( 2,0), math(lbl2 + "'"), tr);
+}
+
+P left_end(double t)
+{
+  Segment tg(boost(P(0, 0), t), boost(P(1, 0), t));
+  Segment rd(boost(P(my_x1, 0), tau-t), boost(P(my_x1, 1), tau-t));
+
+  return tg*rd;
+}
+
+P right_end(double t)
+{
+  Segment tg(boost(P(0, 0), t), boost(P(1, 0), t));
+  Segment rd(boost(P(my_x2, 0), tau-t), boost(P(my_x2, 1), tau-t));
+
+  return tg*rd;
+}
+
+int main()
+{
+  picture(P(-2.25,-0.2), P(2.25,3.2), "4.5 x 3.4in");
+
+  begin();
+
+  label(P(0.5*(xmin()+xmax()), ymin()), P(0,-8), "\\textsc{Fig.~7.}", b);
+
+  screen scr1(P(-1,-1.5), P(2,2.5)), scr2(scr1);
+
+  bold();
+  font_size("footnotesize");
+
+  activate(scr1);
+  rod(0, "P", "Q");
+
+  dashed();
+  time_grid(tau);
+  solid();
+
+  dot(left_end(tau),  P(2,-1), "$P_1$", br);
+  dot(right_end(tau), P(2,-1), "$Q_1$", br);
+
+  inset(P(-2.5,0), P(-0.25,3));
+  deactivate(scr1);
+
+  activate(scr2);
+  rod(tau, "R", "S");
+
+  dashed();
+  time_grid(0);
+
+  dot(left_end(0),  P(0,-3), "$R_1$", br);
+  dot(right_end(0), P(0,-3), "$S_1$", br);
+
+  inset(P(0.25,0), P(2.5,3));
+  deactivate(scr2);
+
+  tikz_format();
+  end();
+}

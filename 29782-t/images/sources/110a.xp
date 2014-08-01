@@ -1,0 +1,51 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+const double C1(cosh(1));
+
+P f(double x, double y)
+{
+  y *= 0.75;
+  return polar(pow(Sec(y), 3)*cosh(x), y) - P(C1,0);
+}
+
+P f(const P& arg) { return f(arg.x1(), arg.x2()); }
+
+/*
+// inverse map
+P g(double u, double v)
+{
+  double y(Atan2(v, u+C1));
+  return P(acosh(sqrt((u+C1)*(u+C1) + v*v)*pow(Cos(y), 3)), y/0.75);
+}
+
+P g(const P& arg) { return g(arg.x1(), arg.x2()); }
+*/
+
+domain R(P(0.5, -0.5), P(1.5,0.5), mesh(4, 5), mesh(4, 60));
+
+int main()
+{
+  picture(P(-0.625,-1), P(1.375,1), "3.5 x 3.5in");
+
+  begin();
+
+  label(P(0.5*(xmin()+xmax()), ymin()), P(0,-8), "\\textsc{Fig.~14.}", b);
+
+  P ptP(1.125, -0.4), ptQ(0.8, 0.4);
+
+  bold();
+
+  plot(f, R);
+
+  dashed();
+  dash_size(6);
+  line(f(ptP), f(ptQ));
+
+  font_size("footnotesize");
+  label(f(ptP), P(2,0), "$P$", r);
+  label(f(ptQ), P(2,0), "$Q$", r);
+
+  tikz_format();
+  end();
+}

@@ -1,0 +1,43 @@
+%% Generated from 064a.xp on Wed Mar  4 09:33:26 EST 2009 by
+%% ePiX-1.2.6
+%% 
+%%   Cartesian bounding box: [0,2.5] x [0,1.5]
+%%   Actual size: 5 x 3in
+%%   Figure offset: left by 0in, down by 0in
+%% 
+%% usepackages tikz
+%% 
+\xdefinecolor{rgb_000000}{rgb}{0,0,0}%
+\begin{tikzpicture}[cap=round]
+\pgfsetlinewidth{0.4pt}
+\useasboundingbox (0in,0in) rectangle (5in,3in);
+\pgftext[at={\pgfpoint{1in}{-0.305348in}}] {\makebox(0,0)[t]{\hbox{\color{rgb_000000}\textsc{Fig.~5.}}}}
+\pgftext[at={\pgfpoint{3.25in}{-0.305348in}}] {\makebox(0,0)[t]{\hbox{\color{rgb_000000}\textsc{Fig.~6.}}}}
+\pgfsetlinewidth{0.8pt}
+\draw (0in,0in)--(0in,1.8in);
+\draw (0in,0in)--(1.8in,0in);
+\draw (0.4in,0in)--(0.4in,1.8in);
+\draw (0in,0.4in)--(1.8in,0.4in);
+\draw (0.8in,0in)--(0.8in,1.8in);
+\draw (0in,0.8in)--(1.8in,0.8in);
+\draw (1.2in,0in)--(1.2in,1.8in);
+\draw (0in,1.2in)--(1.8in,1.2in);
+\draw (1.6in,0in)--(1.6in,1.8in);
+\draw (0in,1.6in)--(1.8in,1.6in);
+\pgftext[at={\pgfpoint{0in}{-0.055348in}}] {\makebox(0,0)[t]{\hbox{\color{rgb_000000}\footnotesize $O$}}}
+\pgftext[at={\pgfpoint{1.77233in}{-0.055348in}}] {\makebox(0,0)[tl]{\hbox{\color{rgb_000000}\footnotesize $X$}}}
+\pgftext[at={\pgfpoint{-0.055348in}{1.8in}}] {\makebox(0,0)[br]{\hbox{\color{rgb_000000}\footnotesize $T$}}}
+\draw (2.2in,0in)--(2.93935in,1.94593in);
+\draw (2.2in,0in)--(4.14593in,0.739354in);
+\draw (2.63243in,0.164301in)--(3.37178in,2.11023in);
+\draw (2.3643in,0.432429in)--(4.31023in,1.17178in);
+\draw (3.06486in,0.328602in)--(3.80421in,2.27453in);
+\draw (2.5286in,0.864858in)--(4.47453in,1.60421in);
+\draw (3.49729in,0.492903in)--(4.23664in,2.43883in);
+\draw (2.6929in,1.29729in)--(4.63883in,2.03664in);
+\draw (3.92972in,0.657204in)--(4.66907in,2.60313in);
+\draw (2.8572in,1.72972in)--(4.80313in,2.46907in);
+\pgftext[at={\pgfpoint{2.2in}{-0.055348in}}] {\makebox(0,0)[t]{\hbox{\color{rgb_000000}\footnotesize $O$}}}
+\pgftext[at={\pgfpoint{4.11826in}{0.684006in}}] {\makebox(0,0)[tl]{\hbox{\color{rgb_000000}\footnotesize $X_1$}}}
+\pgftext[at={\pgfpoint{2.88401in}{1.94593in}}] {\makebox(0,0)[br]{\hbox{\color{rgb_000000}\footnotesize $T_1$}}}
+\end{tikzpicture}

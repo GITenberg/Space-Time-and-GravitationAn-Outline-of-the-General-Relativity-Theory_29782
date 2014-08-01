@@ -1,0 +1,49 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+int main()
+{
+  picture(P(0,0), P(1,1), "1.75 x 1.75in");
+
+  begin();
+
+  label(P(0.5, -0.125), P(0,-4), "\\textsc{Fig.~2.}", b);
+
+  /*
+  arrow_inset(0.5);
+  arrow_width(5);
+  arrow_ratio(2.5);
+  */
+
+  bold();
+  P O(0,0), pt1(0.35,0.45), pt2(0.8,0.75), M(pt2.x1(), pt1.x2());
+
+  line(pt1, pt2);
+  line(O, P(xmax()));
+  line(O, P(0,ymax()));
+
+  dashed();
+  line(P(0,pt1.x2()), M);
+  line(P(0,pt2.x2()), pt2);
+
+  line(P(pt2.x1()), pt2);
+  line(P(pt1.x1()), pt1);
+
+  font_size("footnotesize");
+  label(O, P(-4,-4), "$O$", bl);
+  label(P(xmax()), P(0,-4), "$x$", b);
+  label(P(pt1.x1()), P(0,-4), "$X_1$", b);
+  label(P(pt2.x1()), P(0,-4), "$X_2$", b);
+
+  label(P(0,ymax()), P(-4), "$y$", l);
+  label(P(0,pt1.x2()), P(-4), "$Y_1$", l);
+  label(P(0,pt2.x2()), P(-4), "$Y_2$", l);
+
+  label(M, P(4), "$M$", r);
+  label(pt1, P(-2,4), "$P_1$", tl);
+  label(pt2, P(4), "$P_2$", r);
+
+  tikz_format();
+  end();
+}

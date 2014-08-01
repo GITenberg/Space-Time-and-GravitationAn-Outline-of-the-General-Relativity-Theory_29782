@@ -1,0 +1,31 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+int main()
+{
+  picture(P(0,-0.125), P(1,1.125), "1.6 x 2in");
+
+  begin();
+
+  label(P(0.5, ymin()), P(0,-8), "\\textsc{Fig.~1.}", b);
+
+  arrow_inset(0.5);
+  arrow_width(5);
+  arrow_ratio(2.5);
+
+  bold();
+  P O(0,0), B(1,0), E(1,0.75);
+  triangle(O, B, E);
+
+  font_size("footnotesize");
+  label(O, P(0,-4), "$O$", b);
+  label(B, P(0,-4), "$B$", b);
+  label(E, P(0, 4), "$E$", t);
+
+  arrow(P(0.2, 1.125), P(0.2, 0.8));
+  arrow(P(0.6, 1.125), P(0.6, 0.8));
+
+  tikz_format();
+  end();
+}

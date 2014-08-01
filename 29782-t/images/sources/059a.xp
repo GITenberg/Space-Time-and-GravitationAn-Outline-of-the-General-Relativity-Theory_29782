@@ -1,0 +1,53 @@
+/* -*-ePiX-*- */
+#include "epix.h"
+using namespace ePiX;
+
+int main()
+{
+  picture(P(-1,-1), P(1,1), "3.5 x 3.5in");
+
+  begin();
+
+  label(P(0, ymin()), P(0,-8), "\\textsc{Fig.~3.}", b);
+
+  /*
+  arrow_inset(0.5);
+  arrow_width(5);
+  arrow_ratio(2.5);
+  */
+
+  const double MAX(0.9);
+  const double X1(-0.4);
+
+  bold();
+  P O(0,0), U1(MAX,MAX), U2(-U1), V1(-MAX,MAX), V2(-V1);
+  P T(0,ymax()), X(xmax()), P1(X1, 0.5*(1+MAX)), P2(X1,0.1), N(X1,-X1);
+
+  line(U1, U2);
+  line(V1, V2);
+
+  line(-T, T);
+  line(-X, X);
+
+  dashed();
+  line(P1, P2);
+
+  font_size("footnotesize");
+  label(O, P(-12,-4), "$O$", bl);
+  label(X, P(4), "$X$", r);
+  label(T, P(4), "$T$", r);
+
+  label(U1, P( 2,2),  "$U$", tr);
+  label(U2, P(-2,2), "$U'$", tl);
+
+  label(V1, P( 2,2),  "$V$", tr);
+  label(V2, P( 2,2), "$V'$", tr);
+
+  dot(P1, P(4),  "$P$", r);
+  dot(P2, P(4), "$P'$", r);
+
+  label(N, P(2,2), "$N$", tr);
+
+  tikz_format();
+  end();
+}
